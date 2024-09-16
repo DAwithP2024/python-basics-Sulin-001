@@ -31,20 +31,21 @@ products = {
 }
 
 products_list = list(products.items())
-def display_sorted_products(products_list, sort_order="ascending"):
-    for category, items in products_list:
-        print(f"\nCategory: {category}")
+def display_sorted_products(products_list, sort_order):
+    # Sort products based on the given order
+    if sort_order == "asc":
+        sorted_products = sorted(products_list, key=lambda x: x[1])
+    elif sort_order == "desc":
+        sorted_products = sorted(products_list, key=lambda x: x[1], reverse=True)
+    else:
+        raise ValueError("Invalid sort order. Use 'asc' for ascending or 'desc' for descending.")
+    
+    # Display sorted products
+    for i, product in enumerate(sorted_products, 1):
+        print(f"{i}. {product[0]} - ${product[1]}")
+    
+    return sorted_products
 
-        if sort_order == "ascending":
-            sorted_items = sorted(items, key=lambda x: x[1])
-        elif sort_order == "descending":
-            sorted_items = sorted(items, key=lambda x: x[1], reverse=True)
-        else:
-            print("Invalid sort_order, please use 'ascending' or 'descending'.")
-            return
-
-        for item, price in sorted_items:
-            print(f"{item}: ${price}")
 
 
 def display_products(products_list):
@@ -63,16 +64,30 @@ def display_categories():
 
 
 def add_to_cart(cart, product, quantity):
-    cart.append((product[0], quantity, product[1] * quantity))
+    # Check if product already in cart
+    for item in cart:
+        if item[0] == product[0]:
+            item[1] += quantity
+            item[2] = item[1] * product[1]
+            return
+    
+    # Add new product to cart
+    cart.append([product[0], quantity, quantity * product[1]])
+
 
 def display_cart(cart):
-    print("\n--- Cart Contents ---")
     if not cart:
         print("Your cart is empty.")
         return
 
-    for i, item in enumerate(cart, 1):
-        print(f"{i}. {item[0]} (x{item[1]}) - ${item[2]}")
+    total_cost = 0
+    print("--- Cart Contents ---")
+    for item in cart:
+        total_cost += item[2]
+        print(f"{item[0]} - ${item[1]} x {item[2] // item[1]} = ${item[2]}")
+    
+    print(f"Total cost: ${total_cost}")
+
 
 
 
@@ -95,10 +110,12 @@ def validate_name(name):
 
     
 
-def validate_email():
-    email = input("Enter your email address:")
-    if "@" in email and "." in email:
-        return True
+def validate_email(email):
+    email = email.strip()
+    if '@' in email and '.' in email:
+        at_index = email.index('@')
+        dot_index = email.index('.', at_index)
+        return at_index > 0 and dot_index > at_index + 1 and dot_index < len(email) - 1
     else:
         print("Invalid email address.Please enter a valid email address.")
         validate_email()
