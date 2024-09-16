@@ -116,9 +116,7 @@ def validate_email(email):
         at_index = email.index('@')
         dot_index = email.index('.', at_index)
         return at_index > 0 and dot_index > at_index + 1 and dot_index < len(email) - 1
-    else:
-        print("Invalid email address.Please enter a valid email address.")
-        validate_email()
+    return False
 
 
 def main():
