@@ -64,15 +64,16 @@ def display_categories():
 
 
 def add_to_cart(cart, product, quantity):
-    # Check if product already in cart
+    # Check if the product is already in the cart
     for item in cart:
         if item[0] == product[0]:
+            # Update quantity if the product already exists
             item[1] += quantity
             item[2] = item[1] * product[1]
             return
-    
-    # Add new product to cart
+    # Add new product to the cart
     cart.append([product[0], quantity, quantity * product[1]])
+
 
 
 def display_cart(cart):
@@ -84,9 +85,10 @@ def display_cart(cart):
     print("--- Cart Contents ---")
     for item in cart:
         total_cost += item[2]
-        print(f"{item[0]} - ${item[1]} x {item[2] // item[1]} = ${item[2]}")
+        print(f"{item[0]} - ${item[1] // item[2]} x {item[1] // item[1]} = ${item[2]}")
     
     print(f"Total cost: ${total_cost}")
+
 
 
 
@@ -111,12 +113,9 @@ def validate_name(name):
     
 
 def validate_email(email):
-    email = email.strip()
-    if '@' in email and '.' in email:
-        at_index = email.index('@')
-        dot_index = email.index('.', at_index)
-        return at_index > 0 and dot_index > at_index + 1 and dot_index < len(email) - 1
-    return False
+    # Regular expression to match a basic email format
+    email_regex = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
+    return re.match(email_regex, email) is not None
 
 
 def main():
