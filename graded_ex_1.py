@@ -113,9 +113,7 @@ def validate_name(name):
     
 
 def validate_email(email):
-    # Regular expression to match a basic email format
-    email_regex = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
-    return re.match(email_regex, email) is not None
+    return "@" in email
 
 
 def main():
