@@ -63,25 +63,17 @@ def display_categories():
 
 
 def add_to_cart(cart, product, quantity):
-    for item in cart:
-        if item[0] == product[0]:
-            item[1] = quantity
-            item[2] = item[1] * product[1]
-            return
-    cart.append([product[0], quantity, quantity * product[1]])
+    cart.append((product[0], product[1], quantity))
 
 
 
 def display_cart(cart):
-    if not cart:
-        print("Your cart is empty.")
-        return
-
     total_cost = 0
-    print("--- Cart Contents ---")
-    for item in cart:
-        total_cost += item[2]
-        print(f"{item[0]} - ${item[2] // item[1]} x {item[1] } = ${item[2]}")
+    
+    for product_name,price,quality in cart:
+        total = quality * price
+        total_cost += total
+        print(f"{product_name} - ${price} x {quality} = ${total}")
     
     print(f"Total cost: ${total_cost}")
 
