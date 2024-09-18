@@ -40,7 +40,6 @@ def display_sorted_products(products_list, sort_order):
     else:
         raise ValueError("Invalid sort order. Use 'asc' for ascending or 'desc' for descending.")
     
-    # Display sorted products
     for i, product in enumerate(sorted_products, 1):
         print(f"{i}. {product[0]} - ${product[1]}")
     
@@ -64,14 +63,11 @@ def display_categories():
 
 
 def add_to_cart(cart, product, quantity):
-    # Check if the product is already in the cart
     for item in cart:
         if item[0] == product[0]:
-            # Update quantity if the product already exists
-            item[1] += quantity
+            item[1] = quantity
             item[2] = item[1] * product[1]
             return
-    # Add new product to the cart
     cart.append([product[0], quantity, quantity * product[1]])
 
 
@@ -85,7 +81,7 @@ def display_cart(cart):
     print("--- Cart Contents ---")
     for item in cart:
         total_cost += item[2]
-        print(f"{item[0]} - ${item[1] // item[2]} x {item[1] // item[1]} = ${item[2]}")
+        print(f"{item[0]} - ${item[2] // item[1]} x {item[1] } = ${item[2]}")
     
     print(f"Total cost: ${total_cost}")
 
